@@ -8,7 +8,7 @@
 
 @if (User.IsInRole("admin"))
 {
-    @Html.ActionLink("Dodaj nową drużynę", "Create", "Teams", new { @class = "btn btn-primary" });
+    @Html.ActionLink("Dodaj nową drużynę", "Create", "Teams", null, new { @class = "btn btn-primary" });
 }
 
 <div class="row teams">
