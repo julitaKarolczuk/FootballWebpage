@@ -23,7 +23,35 @@ textarea {
     max-width: 280px;
 }
 
-.logo{
-    width:200px;
+.logo {
+    width: 200px;
     float: left;
+}
+
+.header {
+    padding: 1rem;
+    font-weight: 600;
+    border-radius: 5px;
+}
+
+.teams .team .team-title {
+    text-decoration: none;
+}
+
+.custom-tile {
+    text-align: center;
+    width: 200px;
+    height: 200px;
+    margin-left: 10px;
+    display: inline-block;
+    color: white;
+    font-size: 25px;
+    border-radius: 5px;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    padding-top: 55px;
+    border: solid 1px black
+}
+
+.tiles-container {
+    margin-top: 20px
 }

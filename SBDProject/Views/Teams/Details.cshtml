@@ -4,26 +4,17 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h1 class="alert-info col-md-12 text-center header">@Model.Name</h1>
 
 <div>
-    <h4>Team</h4>
-    <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.Logo)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Logo)
+            <img src="@Model.Logo" />
         </dd>
 
         <dt>
@@ -34,6 +25,16 @@
             @Html.DisplayFor(model => model.Location.Name)
         </dd>
 
+        <dt>
+            Zawodnicy
+        </dt>
+        @foreach (var player in Model.Player)
+        {
+            <dd>
+                @player.FirstName @player.LastName
+            </dd>
+        }
+        
     </dl>
 </div>
 <p>

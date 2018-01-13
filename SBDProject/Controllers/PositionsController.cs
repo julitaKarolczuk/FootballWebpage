@@ -46,10 +46,11 @@ namespace SBDProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Type")] Position position)
+        public ActionResult Create([Bind(Include = "Id,Name")] Position position)
         {
             if (ModelState.IsValid)
             {
+                position.Type = string.Empty;
                 db.Position.Add(position);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -78,10 +79,11 @@ namespace SBDProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Type")] Position position)
+        public ActionResult Edit([Bind(Include = "Id,Name")] Position position)
         {
             if (ModelState.IsValid)
             {
+                position.Type = string.Empty;
                 db.Entry(position).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

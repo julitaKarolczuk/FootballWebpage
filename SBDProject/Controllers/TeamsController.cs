@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SBDProject.Models;
+using System.IO;
 
 namespace SBDProject.Controllers
 {
@@ -54,10 +55,18 @@ namespace SBDProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,LocationId,Logo")] Team team)
+        public ActionResult Create([Bind(Include = "Id,Name,LocationId,Logo")] Team team, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
+                if (file.ContentLength > 0)
+                {
+                    string _FileName = Path.GetFileName(file.FileName);
+                    string _path = Path.Combine(Server.MapPath("~/Images"), _FileName);
+                    file.SaveAs(_path);
+                    team.Logo = $"/Images/{_FileName}";
+                }
+
                 db.Team.Add(team);
                 db.SaveChanges();
                 return RedirectToAction("Index");
