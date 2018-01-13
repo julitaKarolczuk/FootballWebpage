@@ -21,6 +21,14 @@ namespace SBDProject.Controllers
             return View(player.ToList());
         }
 
+        //GET: Players/1 *FROM ONE TEAM
+        public ActionResult MainIndex(int teamId)
+        {
+            var players = db.Player.Where(p => p.TeamId == teamId);
+            return View(players.ToList());
+        }
+
+
         // GET: Players/Details/5
         public ActionResult Details(int? id)
         {

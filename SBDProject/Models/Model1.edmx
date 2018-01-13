@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -23,7 +23,7 @@
           <Property Name="TeamId1" Type="int" Nullable="false" />
           <Property Name="TeamId2" Type="int" Nullable="false" />
           <Property Name="TournamentId" Type="int" Nullable="false" />
-          <Property Name="AppointmentDate" Type="datetime" Nullable="false" />
+          <Property Name="AppointmentDate" Type="date" Nullable="false" />
           <Property Name="LocationId" Type="int" Nullable="false" />
           <Property Name="Attendance" Type="int" Nullable="false" />
         </EntityType>
@@ -86,8 +86,8 @@
           <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="TeamId" Type="int" Nullable="false" />
-          <Property Name="WorkingFrom" Type="datetime" Nullable="false" />
-          <Property Name="WorkingTo" Type="datetime" Nullable="false" />
+          <Property Name="WorkingFrom" Type="date" Nullable="false" />
+          <Property Name="WorkingTo" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="Game_time">
           <Key>
@@ -113,6 +113,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Seats" Type="int" />
+          <Property Name="Picture" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="Player">
           <Key>
@@ -123,8 +125,8 @@
           <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="TeamId" Type="int" Nullable="false" />
           <Property Name="PositionId" Type="int" Nullable="false" />
-          <Property Name="PlayingFrom" Type="datetime" Nullable="false" />
-          <Property Name="PlayingTo" Type="datetime" Nullable="false" />
+          <Property Name="PlayingFrom" Type="date" Nullable="false" />
+          <Property Name="PlayingTo" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="Position">
           <Key>
@@ -199,8 +201,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LigueId" Type="int" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="TimeFrom" Type="datetime" Nullable="false" />
-          <Property Name="TimeTo" Type="datetime" Nullable="false" />
+          <Property Name="TimeFrom" Type="date" Nullable="false" />
+          <Property Name="TimeTo" Type="date" Nullable="false" />
         </EntityType>
         <Association Name="FK__Appointme__Locat__5441852A">
           <End Role="Location" Type="Self.Location" Multiplicity="1" />
@@ -585,8 +587,7 @@
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -608,7 +609,7 @@
           <Property Name="TeamId1" Type="Int32" Nullable="false" />
           <Property Name="TeamId2" Type="Int32" Nullable="false" />
           <Property Name="TournamentId" Type="Int32" Nullable="false" />
-          <Property Name="AppointmentDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AppointmentDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="LocationId" Type="Int32" Nullable="false" />
           <Property Name="Attendance" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Location" Relationship="Self.FK__Appointme__Locat__5441852A" FromRole="Appointment" ToRole="Location" />
@@ -676,8 +677,8 @@
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="TeamId" Type="Int32" Nullable="false" />
-          <Property Name="WorkingFrom" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="WorkingTo" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="WorkingFrom" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="WorkingTo" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Team" Relationship="Self.FK__Coach__TeamId__5535A963" FromRole="Coach" ToRole="Team" />
         </EntityType>
         <EntityType Name="Game_time">
@@ -709,6 +710,8 @@
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Appointment" Relationship="Self.FK__Appointme__Locat__5441852A" FromRole="Location" ToRole="Appointment" />
           <NavigationProperty Name="Team" Relationship="Self.FK__Team__LocationId__60A75C0F" FromRole="Location" ToRole="Team" />
+          <Property Name="Seats" Type="Int32" />
+          <Property Name="Picture" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Player">
           <Key>
@@ -719,8 +722,8 @@
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="TeamId" Type="Int32" Nullable="false" />
           <Property Name="PositionId" Type="Int32" Nullable="false" />
-          <Property Name="PlayingFrom" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="PlayingTo" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PlayingFrom" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PlayingTo" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Game_time" Relationship="Self.FK__Game_time__Playe__5629CD9C" FromRole="Player" ToRole="Game_time" />
           <NavigationProperty Name="Position" Relationship="Self.FK__Player__Position__59063A47" FromRole="Player" ToRole="Position" />
           <NavigationProperty Name="Team" Relationship="Self.FK__Player__TeamId__5812160E" FromRole="Player" ToRole="Team" />
@@ -816,8 +819,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LigueId" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="TimeFrom" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="TimeTo" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TimeFrom" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TimeTo" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Appointment" Relationship="Self.FK__Appointme__Tourn__534D60F1" FromRole="Tournament" ToRole="Appointment" />
           <NavigationProperty Name="Ligue" Relationship="Self.FK__Tournamen__Ligue__619B8048" FromRole="Tournament" ToRole="Ligue" />
         </EntityType>
@@ -1282,6 +1285,8 @@
           <EntitySetMapping Name="Location">
             <EntityTypeMapping TypeName="Model.Location">
               <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="Seats" ColumnName="Seats" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Address" ColumnName="Address" />

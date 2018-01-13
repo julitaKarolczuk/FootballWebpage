@@ -192,6 +192,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AppointmentsController.cs" />
     <Compile Include="Controllers\CoachesController.cs" />
     <Compile Include="Controllers\Game_timeController.cs" />
@@ -451,6 +452,8 @@
     <Content Include="Views\Statistic_detail\Edit.cshtml" />
     <Content Include="Views\Statistic_detail\Index.cshtml" />
     <Content Include="Views\Teams\MainIndex.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Players\MainIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

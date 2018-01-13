@@ -6,5 +6,8 @@
 @foreach (var team in Model)
 {
     <h2>@team.Name</h2>
-    <img class="img-responsive" src="@Url.Content(team.Logo)">
+    <a href="@Url.Action("MainIndex","Players", new {teamId = team.Id })">
+        <img class="img-responsive logo" src="@Url.Content(team.Logo)">
+    </a>
 }
+<div style="clear:both"></div>
