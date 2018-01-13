@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c5e0c2acb67441f480a0a7aafd5cbeb1" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Appointment" Width="1.5" PointX="5.25" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.AspNetRoles" Width="1.5" PointX="9.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.AspNetUserClaims" Width="1.5" PointX="14.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.AspNetUserLogins" Width="1.5" PointX="14.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.AspNetUsers" Width="1.5" PointX="12" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Coach" Width="1.5" PointX="5.25" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Game_time" Width="1.5" PointX="10.5" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Ligue" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Location" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Player" Width="1.5" PointX="8.25" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Position" Width="1.5" PointX="5.25" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Referee" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.RefereeSqad" Width="1.5" PointX="7.5" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.RefereeType" Width="1.5" PointX="5.25" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Squad" Width="1.5" PointX="7.5" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Statistic" Width="1.5" PointX="8.25" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Statistic_detail" Width="1.5" PointX="10.5" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Team" Width="1.5" PointX="3" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Tournament" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK__Appointme__Locat__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Appointme__TeamI__5165187F" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Appointme__TeamI__52593CB8" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Appointme__Tourn__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Game_time__Appoi__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__RefereeSq__Appoi__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Squad__Appointme__5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Coach__TeamId__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Game_time__Playe__5629CD9C" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Tournamen__Ligue__619B8048" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Team__LocationId__60A75C0F" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Player__Position__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Player__TeamId__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Statistic__Playe__5EBF139D" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Squad__PositionI__5DCAEF64" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__RefereeSq__Refer__5AEE82B9" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__RefereeSq__Refer__5BE2A6F2" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Statistic__Stati__5FB337D6" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.AspNetUserRoles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

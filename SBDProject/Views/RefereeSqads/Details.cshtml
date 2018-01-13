@@ -1,0 +1,42 @@
+﻿@model SBDProject.Models.RefereeSqad
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>RefereeSqad</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Appointment.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Appointment.Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Referee.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Referee.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RefereeType.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RefereeType.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
