@@ -4,23 +4,24 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>Ligue</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+<h1>TUNIEJE W LIDZE @Html.DisplayFor(model => model.Name)</h1>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<table class="table table-responsive table-hover">
+    <tr>
+        <td><h4>Nazwa turnieju</h4></td>
+        <td><h4>Data turnieju</h4></td>
+        <td><h4>Mecze</h4></td>
+    </tr>
+    @foreach (var tournament in Model.Tournament)
+    {
+        <tr>
+            <td>@tournament.Name</td>
+            <td>@tournament.TimeFrom.ToString("dd-MM-yyyy") - @tournament.TimeTo.ToString("dd-MM-yyyy")</td>
+            <td>@foreach (var appointment in tournament.Appointment) {
+                   <p>@appointment.Team.Name</p> 
+            }
+            </td>            
+        </tr>
+    }
+</table>
