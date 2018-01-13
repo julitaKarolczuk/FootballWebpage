@@ -302,11 +302,13 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\Bayern.png" />
+    <Content Include="Images\campnou.jpg" />
     <Content Include="Images\Chelsea.png" />
     <Content Include="Images\FCB.png" />
     <Content Include="Images\JAGA.png" />
     <Content Include="Images\PSG.jpg" />
     <Content Include="Images\RM.jpg" />
+    <Content Include="Images\santiago.jpg" />
     <Content Include="Images\startImg.jpg" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -451,9 +453,7 @@
     <Content Include="Views\Statistic_detail\Details.cshtml" />
     <Content Include="Views\Statistic_detail\Edit.cshtml" />
     <Content Include="Views\Statistic_detail\Index.cshtml" />
-    <Content Include="Views\Teams\MainIndex.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Players\MainIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

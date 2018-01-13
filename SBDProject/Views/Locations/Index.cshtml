@@ -4,8 +4,17 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h1 class="alert-info col-md-12 text-center">ZAWODNICY</h1>
 
+@foreach (var stadium in Model)
+{
+        <h2>@stadium.Name</h2>
+        <a href="@Url.Action("Details","Locations", new {id = stadium.Id })">
+            <img class="img-responsive logo" src="@Url.Content(stadium.Picture)">
+        </a>
+    }
+}
+<div style="clear:both"></div>
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>

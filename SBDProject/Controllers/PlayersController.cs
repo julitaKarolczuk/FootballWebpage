@@ -13,16 +13,10 @@ namespace SBDProject.Controllers
     public class PlayersController : Controller
     {
         private Entities db = new Entities();
-
-        // GET: Players
-        public ActionResult Index()
-        {
-            var player = db.Player.Include(p => p.Position).Include(p => p.Team);
-            return View(player.ToList());
-        }
+        
 
         //GET: Players/1 *FROM ONE TEAM
-        public ActionResult MainIndex(int teamId)
+        public ActionResult Index(int teamId)
         {
             var players = db.Player.Where(p => p.TeamId == teamId);
             return View(players.ToList());
