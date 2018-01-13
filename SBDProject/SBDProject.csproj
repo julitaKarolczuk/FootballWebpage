@@ -450,6 +450,7 @@
     <Content Include="Views\Statistic_detail\Details.cshtml" />
     <Content Include="Views\Statistic_detail\Edit.cshtml" />
     <Content Include="Views\Statistic_detail\Index.cshtml" />
+    <Content Include="Views\Teams\MainIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

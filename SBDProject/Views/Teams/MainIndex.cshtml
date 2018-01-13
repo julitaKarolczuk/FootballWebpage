@@ -1,0 +1,10 @@
+﻿
+@{
+    ViewBag.Title = "MainIndex";
+}
+<h1 class="alert-info col-md-12 text-center">DRUŻYNY</h1>
+@foreach (var team in Model)
+{
+    <h2>@team.Name</h2>
+    <img class="img-responsive" src="@Url.Content(team.Logo)">
+}

@@ -21,6 +21,12 @@ namespace SBDProject.Controllers
             return View(team.ToList());
         }
 
+        public ActionResult MainIndex()
+        {
+            var teams = db.Team;
+            return View(teams);
+        }
+
         // GET: Teams/Details/5
         public ActionResult Details(int? id)
         {
