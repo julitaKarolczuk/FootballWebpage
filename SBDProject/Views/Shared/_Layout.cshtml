@@ -19,12 +19,13 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Druzyny", "Index", "Teams")</li>
+                    <li>@Html.ActionLink("Strona główna", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Drużyny", "Index", "Teams")</li>
                     <li>@Html.ActionLink("Zawodnicy", "Index", "Players")</li>
                     <li>@Html.ActionLink("Obiekty sportowe", "Index", "Locations")</li>
                     <li>@Html.ActionLink("Ligi", "Index", "Ligues")</li>
                     <li>@Html.ActionLink("Sędziowie", "Index", "Referees")</li>
+                    <li>@Html.ActionLink("Trenerzy", "Index", "Coaches")</li>
                     <li>@Html.ActionLink("Administracja", "Index", "Admin", null, new { @style = "color:red" })</li>
                 </ul>
                 @Html.Partial("_LoginPartial")

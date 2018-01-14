@@ -1,17 +1,16 @@
 ﻿@model SBDProject.Models.Coach
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Szczegóły trenera";
 }
 
-<h2>Details</h2>
+<h2>Szczegóły trenera</h2>
 
 <div>
-    <h4>Coach</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
+            Imię
         </dt>
 
         <dd>
@@ -19,7 +18,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.LastName)
+            Nazwisko
         </dt>
 
         <dd>
@@ -27,7 +26,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.WorkingFrom)
+            Kontrakt od
         </dt>
 
         <dd>
@@ -35,7 +34,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.WorkingTo)
+            Kontrakt do
         </dt>
 
         <dd>
@@ -43,7 +42,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Team.Name)
+            Drużyna
         </dt>
 
         <dd>
@@ -53,6 +52,7 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edytuj", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Usuń", "Delete", new { id = Model.Id }, new { @class = "btn btn-danger" })
+    @Html.ActionLink("Powrót do listy trenerów", "Index", null, new { @class = "btn btn-primary" })
 </p>
