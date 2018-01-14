@@ -1,10 +1,10 @@
 ﻿@model SBDProject.Models.Coach
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edycja trenera";
 }
 
-<h2>Edit</h2>
+<h2>Edycja trenera</h2>
 
 
 @using (Html.BeginForm())
@@ -12,13 +12,12 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Coach</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Imię</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
@@ -26,7 +25,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Nazwisko</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
@@ -34,7 +33,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TeamId, "TeamId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Drużyna</label>
             <div class="col-md-10">
                 @Html.DropDownList("TeamId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.TeamId, "", new { @class = "text-danger" })
@@ -42,31 +41,29 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.WorkingFrom, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Kontrakt od</label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.WorkingFrom, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.WorkingFrom, "", new { @class = "text-danger" })
+                <input class="form-control" data-val="true" id="WorkingTo" name="WorkingFrom" type="date" value="@Model.WorkingFrom.ToString("yyyy-MM-dd")">
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.WorkingTo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Kontrakt do</label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.WorkingTo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.WorkingTo, "", new { @class = "text-danger" })
+                <input class="form-control" data-val="true" id="WorkingTo" name="WorkingTo" type="date" value="@Model.WorkingTo.ToString("yyyy-MM-dd")">
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Zapisz" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Powrót do listy trenerów", "Index", null, new { @class = "btn btn-primary" })
 </div>
 
 @section Scripts {
