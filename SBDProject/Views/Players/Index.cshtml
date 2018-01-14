@@ -18,11 +18,14 @@
             <h2 class="player-name">@player.FirstName @player.LastName</h2>
             <a href="@Url.Action("Details", "Players", new { id = player.Id })">
                 <div>
-                    <label>Od - do</label>
-                    <span>@player.PlayingFrom.ToString("dd/MM/yyyy") - @player.PlayingTo.ToString("dd/MM/yyyy")</span>
-
-                    <label>Pozycja</label>
-                    <span>@player.Position.Name</span>
+                    <div>
+                        <label>Od - do</label>
+                        <span>@player.PlayingFrom.ToString("dd/MM/yyyy") - @player.PlayingTo.ToString("dd/MM/yyyy")</span>
+                    </div>
+                    <div>
+                        <label>Pozycja</label>
+                        <span>@player.Position.Name</span>
+                    </div>
                 </div>
             </a>
         </div>

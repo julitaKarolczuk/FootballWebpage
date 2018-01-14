@@ -20,21 +20,6 @@ namespace SBDProject.Controllers
             return View(db.Position.ToList());
         }
 
-        // GET: Positions/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Position position = db.Position.Find(id);
-            if (position == null)
-            {
-                return HttpNotFound();
-            }
-            return View(position);
-        }
-
         // GET: Positions/Create
         public ActionResult Create()
         {

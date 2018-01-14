@@ -1,13 +1,20 @@
 ﻿@model SBDProject.Models.Team
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Szczegóły drużyny";
 }
 
 <h1 class="alert-info col-md-12 text-center header">@Model.Name</h1>
 
 <div>
     <dl class="dl-horizontal">
+        <dt>
+            Lokalizacja drużyny
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location.Name)
+        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.Logo)
@@ -17,27 +24,22 @@
             <img src="@Model.Logo" />
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Location.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Location.Name)
-        </dd>
-
-        <dt>
-            Zawodnicy
-        </dt>
-        @foreach (var player in Model.Player)
+        @if (Model.Player.Any())
         {
-            <dd>
-                @player.FirstName @player.LastName
-            </dd>
+            <dt>
+                Zawodnicy
+            </dt>
+            foreach (var player in Model.Player)
+            {
+                <dd>
+                    <a href="/Players/Details/@player.Id">@player.FirstName @player.LastName</a>
+                </dd>
+            }
         }
-        
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edytuj", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Usuń", "Delete", new { id = Model.Id }, new { @class = "btn btn-danger" })
+    @Html.ActionLink("Powrót do listy drużyn", "Index", null, new { @class = "btn btn-primary" })
 </p>

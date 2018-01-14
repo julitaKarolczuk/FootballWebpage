@@ -59,7 +59,7 @@ namespace SBDProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (file.ContentLength > 0)
+                if (file != null && file.ContentLength > 0)
                 {
                     string _FileName = Path.GetFileName(file.FileName);
                     string _path = Path.Combine(Server.MapPath("~/Images"), _FileName);
@@ -97,10 +97,18 @@ namespace SBDProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,LocationId,Logo")] Team team)
+        public ActionResult Edit([Bind(Include = "Id,Name,LocationId,Logo")] Team team, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
+                if (file != null && file.ContentLength > 0)
+                {
+                    string _FileName = Path.GetFileName(file.FileName);
+                    string _path = Path.Combine(Server.MapPath("~/Images"), _FileName);
+                    file.SaveAs(_path);
+                    team.Logo = $"/Images/{_FileName}";
+                }
+
                 db.Entry(team).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
