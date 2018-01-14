@@ -3,46 +3,34 @@
 @{
     ViewBag.Title = "Index";
 }
+<h1 class="alert-info col-md-12 text-center header">STADIONY</h1>
 
-<h1 class="alert-info col-md-12 text-center">ZAWODNICY</h1>
-
-@foreach (var stadium in Model)
+@if (User.IsInRole("admin"))
 {
-        <h2>@stadium.Name</h2>
-        <a href="@Url.Action("Details","Locations", new {id = stadium.Id })">
-            <img class="img-responsive logo" src="@Url.Content(stadium.Picture)">
-        </a>
+    @Html.ActionLink("Dodaj nowy obiekt", "Create", "Locations", null, new { @class = "btn btn-primary" });
+}
+<div class="row locations">
+    @foreach (var stadium in Model)
+    {
+        <div class="col-md-6 location">
+            <div class="row">
+                <h2 class="location-title col-md-12">@stadium.Name</h2>
+                <img class="img-responsive logo col-md-6" src="@Url.Content(stadium.Picture!=null ? stadium.Picture : "~/Images/noimg.png")" />
+                <div class="col-md-6">
+                    <div class="row">
+                        <h5 class="col-md-4">@stadium.Address</h5>
+                        <div class="col-md-8">
+                            @foreach (var team in stadium.Team)
+                            {
+                                <p>@team.Name</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            @Html.ActionLink("Edytuj", "Edit", "Locations", new { id = stadium.Id}, new { @class = "btn btn-primary" })
+        </div>
+        
     }
-}
-<div style="clear:both"></div>
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
-</table>
+</div>

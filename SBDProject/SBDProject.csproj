@@ -306,6 +306,7 @@
     <Content Include="Images\Chelsea.png" />
     <Content Include="Images\FCB.png" />
     <Content Include="Images\JAGA.png" />
+    <Content Include="Images\noimg.png" />
     <Content Include="Images\PSG.jpg" />
     <Content Include="Images\RM.jpg" />
     <Content Include="Images\santiago.jpg" />

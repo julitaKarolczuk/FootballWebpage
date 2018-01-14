@@ -3,10 +3,10 @@
 @{
     ViewBag.Title = "Index";
 }
-<br/>
+<h1 class="alert-info col-md-12 text-center header">LIGI</h1>
 @if (User.IsInRole("admin"))
 {
-    <input type="button" class="btn-primary" value="Dodaj ligę">
+    @Html.ActionLink("Create","Create","Ligues",null,new { @class = "btn btn-primary"})
 }
 
 <br />

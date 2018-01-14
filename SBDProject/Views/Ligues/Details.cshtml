@@ -5,13 +5,17 @@
 }
 
 
-<h1>TUNIEJE W LIDZE @Html.DisplayFor(model => model.Name)</h1>
+<h1 class="alert-info col-md-12 text-center header">TUNIEJE W LIDZE @Html.DisplayFor(model => model.Name)</h1>
 
+@if (User.IsInRole("admin"))
+{
+    @Html.ActionLink("Dodaj nowy turniej", "Create", "Tournaments", null, new { @class = "btn btn-primary" });
+}
 <table class="table table-responsive table-hover">
     <tr>
         <td><h4>Nazwa turnieju</h4></td>
         <td><h4>Data turnieju</h4></td>
-        <td><h4>Mecze</h4></td>
+        <td><h4>Uczestnicy</h4></td>
     </tr>
     @foreach (var tournament in Model.Tournament)
     {
@@ -21,7 +25,8 @@
             <td>@foreach (var appointment in tournament.Appointment) {
                    <p>@appointment.Team.Name</p> 
             }
-            </td>            
+            </td>        
+            <td>@Html.ActionLink("Mecze","Details","Tournaments",new { id=tournament.Id}, new { @class = "btn btn-primary"})</td>
         </tr>
     }
 </table>

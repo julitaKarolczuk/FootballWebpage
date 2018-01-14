@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using SBDProject.Models;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using SBDProject.Models;
 
 namespace SBDProject.Controllers
 {
@@ -17,8 +13,8 @@ namespace SBDProject.Controllers
         // GET: Tournaments
         public ActionResult Index()
         {
-            var tournament = db.Tournament.Include(t => t.Ligue);
-            return View(tournament.ToList());
+            var tournaments = db.Tournament;
+            return View(tournaments.ToList());
         }
 
         // GET: Tournaments/Details/5
@@ -28,7 +24,7 @@ namespace SBDProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tournament tournament = db.Tournament.Find(id);
+            var tournament = db.Tournament.Find(id);
             if (tournament == null)
             {
                 return HttpNotFound();

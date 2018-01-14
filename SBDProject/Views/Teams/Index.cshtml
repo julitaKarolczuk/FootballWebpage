@@ -17,8 +17,11 @@
         <div class="col-md-3 team">
             <h2 class="team-title">@team.Name</h2>
             <a href="@Url.Action("Details", "Teams", new { id = team.Id })">
-                <img class="img-responsive logo" src="@Url.Content(team.Logo)" />
+                <img class="img-responsive logo" src="@Url.Content(team.Logo != null ? team.Logo : "~/Images/noimg.png")" />
             </a>
         </div>
     }
 </div>
+
+  
+ 

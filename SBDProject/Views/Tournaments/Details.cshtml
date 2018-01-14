@@ -4,48 +4,38 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h1 class="alert-info col-md-12 text-center header">MECZE</h1>
 
-<div>
-    <h4>Tournament</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+@if (User.IsInRole("admin"))
+{
+    @Html.ActionLink("Dodaj nowy mecz", "Create", "Appointments", null, new { @class = "btn btn-primary" });
+}
+<table class="table table-responsive">
+    <tr>
+        <th>
+            Data Meczu
+        </th>
+        <th>
+            Gospodarz
+        </th>
+        <th>
+            Gość
+        </th>
+        <th>
+            Lokalizacja
+        </th>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+        <th></th>
+    </tr>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TimeFrom)
-        </dt>
+    @foreach (var app in Model.Appointment)
+    {
+        <tr>
+                <td>@app.AppointmentDate</td>
+                <td>@app.Team</td>
+                <td>@app.Team1</td>
+                <td>@app.Location.Name</td>
+        </tr>
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.TimeFrom)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TimeTo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TimeTo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Ligue.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Ligue.Name)
-        </dd>
-
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+</table>
