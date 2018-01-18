@@ -39,5 +39,6 @@ namespace SBDProject.Models
         public virtual ICollection<RefereeSqad> RefereeSqad { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Squad> Squad { get; set; }
+        public virtual Ligue Ligue { get; set; }
     }
 }

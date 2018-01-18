@@ -18,6 +18,7 @@ namespace SBDProject.Models
         public Ligue()
         {
             this.Team = new HashSet<Team>();
+            this.Appointment = new HashSet<Appointment>();
         }
     
         public int Id { get; set; }
@@ -25,5 +26,7 @@ namespace SBDProject.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Team> Team { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Appointment> Appointment { get; set; }
     }
 }

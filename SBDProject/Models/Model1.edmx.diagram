@@ -44,6 +44,7 @@
         <AssociationConnector Association="Model.FK__Statistic__Stati__5FB337D6" />
         <AssociationConnector Association="Model.AspNetUserRoles" />
         <AssociationConnector Association="Model.FK__Team__LigueId__60A75C0F" />
+        <AssociationConnector Association="Model.FK__Appointme__Ligue__72C60C4A" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
