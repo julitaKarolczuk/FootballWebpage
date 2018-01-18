@@ -42,6 +42,7 @@ namespace SBDProject.Controllers
             ViewBag.LocationId = new SelectList(db.Location, "Id", "Name");
             ViewBag.TeamId1 = new SelectList(db.Team, "Id", "Name");
             ViewBag.TeamId2 = new SelectList(db.Team, "Id", "Name");
+            ViewBag.LigueId = new SelectList(db.Ligue, "Id", "Name");
             ViewBag.Referee1 = ViewBag.Referee2 = ViewBag.Referee3 = ViewBag.Referee4 = new SelectList(db.Referee.Select(r => new { r.Id, FirstNAme = r.FirstName + " " + r.LastName }), "Id", "FirstName");
             return View();
         }
@@ -51,7 +52,7 @@ namespace SBDProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,TeamId1,TeamId2,TournamentId,AppointmentDate,LocationId,Attendance")] Appointment appointment, int referee1, int referee2, int referee3, int referee4)
+        public ActionResult Create([Bind(Include = "Id,TeamId1,TeamId2,TournamentId,AppointmentDate,LocationId,Attendance,LigueId")] Appointment appointment, int referee1, int referee2, int referee3, int referee4)
         {
             if (ModelState.IsValid)
             {
