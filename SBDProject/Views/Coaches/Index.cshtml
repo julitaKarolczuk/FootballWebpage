@@ -18,6 +18,7 @@
             <a href="/Coaches/Details/@coach.Id">
                 <h2 class="coach-name">@coach.FirstName @coach.LastName</h2>
                 <label>Drużyna :</label><span>@coach.Team.Name</span>
+                <img class="img-responsive logo" src="@Url.Content(coach.Picture != null ? coach.Picture : "~/Images/noimg.png")" />
             </a>
         </div>
     }

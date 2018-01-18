@@ -17,6 +17,7 @@
         <div class="col-md-3 referee">
             <a href="/Referees/Details/@referee.Id">
                 <h2 class="referee-name">@referee.FirstName @referee.LastName</h2>
+                <img class="img-responsive logo" src="@Url.Content(referee.Picture != null ? referee.Picture : "~/Images/noimg.png")" />
             </a>
         </div>
     }

@@ -51,6 +51,13 @@ namespace SBDProject.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (file != null && file.ContentLength > 0)
+                {
+                    string _FileName = Path.GetFileName(file.FileName);
+                    string _path = Path.Combine(Server.MapPath("~/Images"), _FileName);
+                    file.SaveAs(_path);
+                    referee.Picture = $"/Images/{_FileName}";
+                }
                 db.Referee.Add(referee);
                 db.SaveChanges();
                 return RedirectToAction("Index");
