@@ -1,17 +1,16 @@
 ﻿@model SBDProject.Models.Appointment
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Szczegóły meczu";
 }
 
-<h2>Details</h2>
+<h2>Szczegóły meczu</h2>
 
 <div>
-    <h4>Appointment</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-           Data spotkania
+            Data spotkania
         </dt>
 
         <dd>
@@ -52,6 +51,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edycja", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Powró do listy meczów", "Index", null, new { @class = "btn btn-primary" })
 </p>

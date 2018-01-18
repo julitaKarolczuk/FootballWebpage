@@ -42,7 +42,6 @@ namespace SBDProject.Controllers
             ViewBag.LocationId = new SelectList(db.Location, "Id", "Name");
             ViewBag.TeamId1 = new SelectList(db.Team, "Id", "Name");
             ViewBag.TeamId2 = new SelectList(db.Team, "Id", "Name");
-            
             return View();
         }
 
@@ -63,7 +62,6 @@ namespace SBDProject.Controllers
             ViewBag.LocationId = new SelectList(db.Location, "Id", "Name", appointment.LocationId);
             ViewBag.TeamId1 = new SelectList(db.Team, "Id", "Name", appointment.TeamId1);
             ViewBag.TeamId2 = new SelectList(db.Team, "Id", "Name", appointment.TeamId2);
-            
             return View(appointment);
         }
 
@@ -82,7 +80,6 @@ namespace SBDProject.Controllers
             ViewBag.LocationId = new SelectList(db.Location, "Id", "Name", appointment.LocationId);
             ViewBag.TeamId1 = new SelectList(db.Team, "Id", "Name", appointment.TeamId1);
             ViewBag.TeamId2 = new SelectList(db.Team, "Id", "Name", appointment.TeamId2);
-            
             return View(appointment);
         }
 
@@ -102,7 +99,6 @@ namespace SBDProject.Controllers
             ViewBag.LocationId = new SelectList(db.Location, "Id", "Name", appointment.LocationId);
             ViewBag.TeamId1 = new SelectList(db.Team, "Id", "Name", appointment.TeamId1);
             ViewBag.TeamId2 = new SelectList(db.Team, "Id", "Name", appointment.TeamId2);
-            
             return View(appointment);
         }
 
