@@ -56,7 +56,7 @@ namespace SBDProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,LocationId,Logo")] Team team, HttpPostedFileBase file)
+        public ActionResult Create([Bind(Include = "Id,Name,LocationId,Logo,LigueId")] Team team, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +98,7 @@ namespace SBDProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,LocationId,Logo")] Team team, HttpPostedFileBase file)
+        public ActionResult Edit([Bind(Include = "Id,Name,LocationId,Logo,LigueId")] Team team, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {

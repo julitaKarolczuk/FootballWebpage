@@ -1,32 +1,26 @@
-﻿@model SBDProject.Models.Ligue
+﻿
+@model SBDProject.Models.Ligue
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Szczegóły ligi";
 }
 
 
-<h1 class="alert-info col-md-12 text-center header">TUNIEJE W LIDZE @Html.DisplayFor(model => model.Name)</h1>
-
-@if (User.IsInRole("admin"))
-{
-    @Html.ActionLink("Dodaj nowy turniej", "Create", "Tournaments", null, new { @class = "btn btn-primary" });
-}
-<table class="table table-responsive table-hover">
-    <tr>
-        <td><h4>Nazwa turnieju</h4></td>
-        <td><h4>Data turnieju</h4></td>
-        <td><h4>Uczestnicy</h4></td>
-    </tr>
-    @foreach (var tournament in Model.Tournament)
-    {
+<h1 class="alert-info col-md-12 text-center header">@Model.Name</h1>
+    <table class="table table-responsive table-hover">
         <tr>
-            <td>@tournament.Name</td>
-            <td>@tournament.TimeFrom.ToString("dd-MM-yyyy") - @tournament.TimeTo.ToString("dd-MM-yyyy")</td>
-            <td>@foreach (var appointment in tournament.Appointment) {
-                   <p>@appointment.Team.Name</p> 
-            }
-            </td>        
-            <td>@Html.ActionLink("Mecze","Details","Tournaments",new { id=tournament.Id}, new { @class = "btn btn-primary"})</td>
+            <td><h4>Nazwa drużyny</h4></td>
+            <td><h4>Lokalizacja</h4></td>
+            <td><h4>Uczestnicy</h4></td>
+            <td></td>
         </tr>
-    }
-</table>
+        @foreach (var team in Model.Team)
+        {
+            <tr>
+                <td>@team.Name</td>
+                <td>@team.Location.Name</td>
+                <td><img src="@team.Logo"</td>
+                <td>@Html.ActionLink("Szczegóły", "Details", "Teams", new { id = team.Id }, new { @class = "btn btn-primary" })</td>
+            </tr>
+        }
+    </table>

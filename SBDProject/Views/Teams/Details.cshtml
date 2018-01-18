@@ -24,6 +24,22 @@
             <img src="@Model.Logo" />
         </dd>
 
+        <dt>Liga</dt>
+        <dd>
+            <a href="/Ligues/Details/@Model.Ligue.Id">@Model.Ligue.Name</a>
+        </dd>
+
+        @if (Model.Coach.Any())
+        {
+            <dt>Trenerzy</dt>
+            foreach (var coach in Model.Coach)
+            {
+                <dd>
+                    <a href="/Coaches/Details/@coach.Id">@coach.FirstName @coach.LastName</a>
+                </dd>
+            }
+        }
+
         @if (Model.Player.Any())
         {
             <dt>
