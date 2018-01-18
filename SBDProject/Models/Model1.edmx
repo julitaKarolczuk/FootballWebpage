@@ -15,6 +15,7 @@
           <Property Name="AppointmentDate" Type="datetime" Nullable="false" />
           <Property Name="LocationId" Type="int" Nullable="false" />
           <Property Name="Attendance" Type="int" Nullable="false" />
+          <Property Name="LigueId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -680,6 +681,7 @@
           <NavigationProperty Name="Game_time" Relationship="Model.FK__Game_time__Appoi__571DF1D5" FromRole="Appointment" ToRole="Game_time" />
           <NavigationProperty Name="RefereeSqad" Relationship="Model.FK__RefereeSq__Appoi__59FA5E80" FromRole="Appointment" ToRole="RefereeSqad" />
           <NavigationProperty Name="Squad" Relationship="Model.FK__Squad__Appointme__5CD6CB2B" FromRole="Appointment" ToRole="Squad" />
+          <Property Name="LigueId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -1133,6 +1135,7 @@
           <EntitySetMapping Name="Appointment">
             <EntityTypeMapping TypeName="Model.Appointment">
               <MappingFragment StoreEntitySet="Appointment">
+                <ScalarProperty Name="LigueId" ColumnName="LigueId" />
                 <ScalarProperty Name="Attendance" ColumnName="Attendance" />
                 <ScalarProperty Name="LocationId" ColumnName="LocationId" />
                 <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />

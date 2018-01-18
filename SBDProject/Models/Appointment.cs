@@ -28,6 +28,7 @@ namespace SBDProject.Models
         public System.DateTime AppointmentDate { get; set; }
         public int LocationId { get; set; }
         public int Attendance { get; set; }
+        public int LigueId { get; set; }
     
         public virtual Location Location { get; set; }
         public virtual Team Team { get; set; }
