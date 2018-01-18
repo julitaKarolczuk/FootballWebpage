@@ -44,6 +44,5 @@ namespace SBDProject.Models
         public virtual DbSet<Statistic> Statistic { get; set; }
         public virtual DbSet<Statistic_detail> Statistic_detail { get; set; }
         public virtual DbSet<Team> Team { get; set; }
-        public virtual DbSet<Tournament> Tournament { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace SBDProject.Models
         public int TeamId { get; set; }
         public System.DateTime WorkingFrom { get; set; }
         public System.DateTime WorkingTo { get; set; }
+        public string Picture { get; set; }
     
         public virtual Team Team { get; set; }
     }
