@@ -209,7 +209,6 @@
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Controllers\Statistic_detailController.cs" />
     <Compile Include="Controllers\TeamsController.cs" />
-    <Compile Include="Controllers\TournamentsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

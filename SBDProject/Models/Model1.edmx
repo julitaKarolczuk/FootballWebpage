@@ -12,7 +12,6 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TeamId1" Type="int" Nullable="false" />
           <Property Name="TeamId2" Type="int" Nullable="false" />
-          <Property Name="TournamentId" Type="int" Nullable="false" />
           <Property Name="AppointmentDate" Type="datetime" Nullable="false" />
           <Property Name="LocationId" Type="int" Nullable="false" />
           <Property Name="Attendance" Type="int" Nullable="false" />
@@ -672,7 +671,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TeamId1" Type="Int32" Nullable="false" />
           <Property Name="TeamId2" Type="Int32" Nullable="false" />
-          <Property Name="TournamentId" Type="Int32" Nullable="false" />
           <Property Name="AppointmentDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LocationId" Type="Int32" Nullable="false" />
           <Property Name="Attendance" Type="Int32" Nullable="false" />
@@ -1138,7 +1136,6 @@
                 <ScalarProperty Name="Attendance" ColumnName="Attendance" />
                 <ScalarProperty Name="LocationId" ColumnName="LocationId" />
                 <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
-                <ScalarProperty Name="TournamentId" ColumnName="TournamentId" />
                 <ScalarProperty Name="TeamId2" ColumnName="TeamId2" />
                 <ScalarProperty Name="TeamId1" ColumnName="TeamId1" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

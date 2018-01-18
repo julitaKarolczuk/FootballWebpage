@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -78,10 +79,17 @@ namespace SBDProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName")] Referee referee)
+        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,Picture")] Referee referee, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
+                if (file != null && file.ContentLength > 0)
+                {
+                    string _FileName = Path.GetFileName(file.FileName);
+                    string _path = Path.Combine(Server.MapPath("~/Images"), _FileName);
+                    file.SaveAs(_path);
+                    team.Logo = $"/Images/{_FileName}";
+                }
                 db.Entry(referee).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
