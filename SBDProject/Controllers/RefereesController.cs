@@ -47,7 +47,7 @@ namespace SBDProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FirstName,LastName")] Referee referee)
+        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,Picture")] Referee referee, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace SBDProject.Controllers
                     string _FileName = Path.GetFileName(file.FileName);
                     string _path = Path.Combine(Server.MapPath("~/Images"), _FileName);
                     file.SaveAs(_path);
-                    team.Logo = $"/Images/{_FileName}";
+                    referee.Picture = $"/Images/{_FileName}";
                 }
                 db.Entry(referee).State = EntityState.Modified;
                 db.SaveChanges();
