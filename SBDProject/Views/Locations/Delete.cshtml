@@ -1,18 +1,17 @@
 ﻿@model SBDProject.Models.Location
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Usuwanie lokalizacji";
 }
 
-<h2>Delete</h2>
+<h2>Usuwanie lokalizacji</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Czy na pewno usunąć lokalizację?</h3>
 <div>
-    <h4>Location</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            Nazwa lokalizacji
         </dt>
 
         <dd>
@@ -20,7 +19,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Address)
+            Adres
         </dt>
 
         <dd>
@@ -33,8 +32,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Usuń" class="btn btn-default" />
+            @Html.ActionLink("Powrót do listy lokalizacji", "Index", null, new { @class = "btn btn-primary" })
         </div>
     }
 </div>

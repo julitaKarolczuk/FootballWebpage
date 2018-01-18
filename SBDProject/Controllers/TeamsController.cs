@@ -47,6 +47,7 @@ namespace SBDProject.Controllers
         public ActionResult Create()
         {
             ViewBag.LocationId = new SelectList(db.Location, "Id", "Name");
+            ViewBag.LigueId = new SelectList(db.Ligue, "Id", "Name");
             return View();
         }
 

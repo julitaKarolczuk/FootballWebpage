@@ -5,16 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="__MigrationHistory">
-          <Key>
-            <PropertyRef Name="MigrationId" />
-            <PropertyRef Name="ContextKey" />
-          </Key>
-          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
-          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
-          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
-        </EntityType>
         <EntityType Name="Appointment">
           <Key>
             <PropertyRef Name="Id" />
@@ -23,7 +13,7 @@
           <Property Name="TeamId1" Type="int" Nullable="false" />
           <Property Name="TeamId2" Type="int" Nullable="false" />
           <Property Name="TournamentId" Type="int" Nullable="false" />
-          <Property Name="AppointmentDate" Type="date" Nullable="false" />
+          <Property Name="AppointmentDate" Type="datetime" Nullable="false" />
           <Property Name="LocationId" Type="int" Nullable="false" />
           <Property Name="Attendance" Type="int" Nullable="false" />
         </EntityType>
@@ -55,11 +45,11 @@
         </EntityType>
         <EntityType Name="AspNetUserRoles">
           <Key>
-            <PropertyRef Name="UserId" />
             <PropertyRef Name="RoleId" />
+            <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="AspNetUsers">
           <Key>
@@ -78,6 +68,16 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
         <EntityType Name="Coach">
           <Key>
             <PropertyRef Name="Id" />
@@ -86,8 +86,8 @@
           <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="TeamId" Type="int" Nullable="false" />
-          <Property Name="WorkingFrom" Type="date" Nullable="false" />
-          <Property Name="WorkingTo" Type="date" Nullable="false" />
+          <Property Name="WorkingFrom" Type="datetime" Nullable="false" />
+          <Property Name="WorkingTo" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Game_time">
           <Key>
@@ -125,8 +125,8 @@
           <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="TeamId" Type="int" Nullable="false" />
           <Property Name="PositionId" Type="int" Nullable="false" />
-          <Property Name="PlayingFrom" Type="date" Nullable="false" />
-          <Property Name="PlayingTo" Type="date" Nullable="false" />
+          <Property Name="PlayingFrom" Type="datetime" Nullable="false" />
+          <Property Name="PlayingTo" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Position">
           <Key>
@@ -192,6 +192,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="LocationId" Type="int" Nullable="false" />
+          <Property Name="LigueId" Type="int" Nullable="false" />
           <Property Name="Logo" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Tournament">
@@ -201,8 +202,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LigueId" Type="int" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="TimeFrom" Type="date" Nullable="false" />
-          <Property Name="TimeTo" Type="date" Nullable="false" />
+          <Property Name="TimeFrom" Type="datetime" Nullable="false" />
+          <Property Name="TimeTo" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="FK__Appointme__Locat__5441852A">
           <End Role="Location" Type="Self.Location" Multiplicity="1" />
@@ -396,6 +397,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Team__LigueId__60A75C0F">
+          <End Role="Ligue" Type="Self.Ligue" Multiplicity="1" />
+          <End Role="Team" Type="Self.Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ligue">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Team">
+              <PropertyRef Name="LigueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Team__LocationId__60A75C0F">
           <End Role="Location" Type="Self.Location" Multiplicity="1" />
           <End Role="Team" Type="Self.Team" Multiplicity="*" />
@@ -417,6 +430,30 @@
             </Principal>
             <Dependent Role="Tournament">
               <PropertyRef Name="LigueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUserRoles_AspNetRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1" />
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUserRoles_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -448,42 +485,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
-          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetRoles">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserRoles">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserRoles">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="ModelStoreContainer">
-          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Appointment" EntityType="Self.Appointment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Coach" EntityType="Self.Coach" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Game_time" EntityType="Self.Game_time" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ligue" EntityType="Self.Ligue" Schema="dbo" store:Type="Tables" />
@@ -562,6 +571,10 @@
             <End Role="Statistic" EntitySet="Statistic" />
             <End Role="Statistic_detail" EntitySet="Statistic_detail" />
           </AssociationSet>
+          <AssociationSet Name="FK__Team__LigueId__60A75C0F" Association="Self.FK__Team__LigueId__60A75C0F">
+            <End Role="Ligue" EntitySet="Ligue" />
+            <End Role="Team" EntitySet="Team" />
+          </AssociationSet>
           <AssociationSet Name="FK__Team__LocationId__60A75C0F" Association="Self.FK__Team__LocationId__60A75C0F">
             <End Role="Location" EntitySet="Location" />
             <End Role="Team" EntitySet="Team" />
@@ -569,6 +582,14 @@
           <AssociationSet Name="FK__Tournamen__Ligue__619B8048" Association="Self.FK__Tournamen__Ligue__619B8048">
             <End Role="Ligue" EntitySet="Ligue" />
             <End Role="Tournament" EntitySet="Tournament" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUserRoles_AspNetRoles" Association="Self.FK_AspNetUserRoles_AspNetRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUserRoles_AspNetUsers" Association="Self.FK_AspNetUserRoles_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -578,29 +599,121 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="C__MigrationHistory">
-          <Key>
-            <PropertyRef Name="MigrationId" />
-            <PropertyRef Name="ContextKey" />
-          </Key>
-          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Appointment" EntityType="Model.Appointment" />
+          <EntitySet Name="AspNetRoles" EntityType="Model.AspNetRoles" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Model.AspNetUserClaims" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Model.AspNetUserLogins" />
+          <EntitySet Name="AspNetUsers" EntityType="Model.AspNetUsers" />
+          <EntitySet Name="C__MigrationHistory" EntityType="Model.C__MigrationHistory" />
+          <EntitySet Name="Coach" EntityType="Model.Coach" />
+          <EntitySet Name="Game_time" EntityType="Model.Game_time" />
+          <EntitySet Name="Ligue" EntityType="Model.Ligue" />
+          <EntitySet Name="Location" EntityType="Model.Location" />
+          <EntitySet Name="Player" EntityType="Model.Player" />
+          <EntitySet Name="Position" EntityType="Model.Position" />
+          <EntitySet Name="Referee" EntityType="Model.Referee" />
+          <EntitySet Name="RefereeSqad" EntityType="Model.RefereeSqad" />
+          <EntitySet Name="RefereeType" EntityType="Model.RefereeType" />
+          <EntitySet Name="Squad" EntityType="Model.Squad" />
+          <EntitySet Name="Statistic" EntityType="Model.Statistic" />
+          <EntitySet Name="Statistic_detail" EntityType="Model.Statistic_detail" />
+          <EntitySet Name="Team" EntityType="Model.Team" />
+          <EntitySet Name="Tournament" EntityType="Model.Tournament" />
+          <AssociationSet Name="FK__Appointme__Locat__5441852A" Association="Model.FK__Appointme__Locat__5441852A">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="Appointment" EntitySet="Appointment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Appointme__TeamI__5165187F" Association="Model.FK__Appointme__TeamI__5165187F">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="Appointment" EntitySet="Appointment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Appointme__TeamI__52593CB8" Association="Model.FK__Appointme__TeamI__52593CB8">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="Appointment" EntitySet="Appointment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Appointme__Tourn__534D60F1" Association="Model.FK__Appointme__Tourn__534D60F1">
+            <End Role="Tournament" EntitySet="Tournament" />
+            <End Role="Appointment" EntitySet="Appointment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Game_time__Appoi__571DF1D5" Association="Model.FK__Game_time__Appoi__571DF1D5">
+            <End Role="Appointment" EntitySet="Appointment" />
+            <End Role="Game_time" EntitySet="Game_time" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RefereeSq__Appoi__59FA5E80" Association="Model.FK__RefereeSq__Appoi__59FA5E80">
+            <End Role="Appointment" EntitySet="Appointment" />
+            <End Role="RefereeSqad" EntitySet="RefereeSqad" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Squad__Appointme__5CD6CB2B" Association="Model.FK__Squad__Appointme__5CD6CB2B">
+            <End Role="Appointment" EntitySet="Appointment" />
+            <End Role="Squad" EntitySet="Squad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Coach__TeamId__5535A963" Association="Model.FK__Coach__TeamId__5535A963">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="Coach" EntitySet="Coach" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Game_time__Playe__5629CD9C" Association="Model.FK__Game_time__Playe__5629CD9C">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Game_time" EntitySet="Game_time" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tournamen__Ligue__619B8048" Association="Model.FK__Tournamen__Ligue__619B8048">
+            <End Role="Ligue" EntitySet="Ligue" />
+            <End Role="Tournament" EntitySet="Tournament" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Team__LocationId__60A75C0F" Association="Model.FK__Team__LocationId__60A75C0F">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="Team" EntitySet="Team" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Player__Position__59063A47" Association="Model.FK__Player__Position__59063A47">
+            <End Role="Position" EntitySet="Position" />
+            <End Role="Player" EntitySet="Player" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Player__TeamId__5812160E" Association="Model.FK__Player__TeamId__5812160E">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="Player" EntitySet="Player" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Statistic__Playe__5EBF139D" Association="Model.FK__Statistic__Playe__5EBF139D">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Statistic_detail" EntitySet="Statistic_detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Squad__PositionI__5DCAEF64" Association="Model.FK__Squad__PositionI__5DCAEF64">
+            <End Role="Position" EntitySet="Position" />
+            <End Role="Squad" EntitySet="Squad" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RefereeSq__Refer__5AEE82B9" Association="Model.FK__RefereeSq__Refer__5AEE82B9">
+            <End Role="Referee" EntitySet="Referee" />
+            <End Role="RefereeSqad" EntitySet="RefereeSqad" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RefereeSq__Refer__5BE2A6F2" Association="Model.FK__RefereeSq__Refer__5BE2A6F2">
+            <End Role="RefereeType" EntitySet="RefereeType" />
+            <End Role="RefereeSqad" EntitySet="RefereeSqad" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Statistic__Stati__5FB337D6" Association="Model.FK__Statistic__Stati__5FB337D6">
+            <End Role="Statistic" EntitySet="Statistic" />
+            <End Role="Statistic_detail" EntitySet="Statistic_detail" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Model.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Team__LigueId__60A75C0F" Association="Model.FK__Team__LigueId__60A75C0F">
+            <End Role="Ligue" EntitySet="Ligue" />
+            <End Role="Team" EntitySet="Team" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Appointment">
           <Key>
             <PropertyRef Name="Id" />
@@ -609,34 +722,34 @@
           <Property Name="TeamId1" Type="Int32" Nullable="false" />
           <Property Name="TeamId2" Type="Int32" Nullable="false" />
           <Property Name="TournamentId" Type="Int32" Nullable="false" />
-          <Property Name="AppointmentDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="AppointmentDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LocationId" Type="Int32" Nullable="false" />
           <Property Name="Attendance" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Location" Relationship="Self.FK__Appointme__Locat__5441852A" FromRole="Appointment" ToRole="Location" />
-          <NavigationProperty Name="Team" Relationship="Self.FK__Appointme__TeamI__5165187F" FromRole="Appointment" ToRole="Team" />
-          <NavigationProperty Name="Team1" Relationship="Self.FK__Appointme__TeamI__52593CB8" FromRole="Appointment" ToRole="Team" />
-          <NavigationProperty Name="Tournament" Relationship="Self.FK__Appointme__Tourn__534D60F1" FromRole="Appointment" ToRole="Tournament" />
-          <NavigationProperty Name="Game_time" Relationship="Self.FK__Game_time__Appoi__571DF1D5" FromRole="Appointment" ToRole="Game_time" />
-          <NavigationProperty Name="RefereeSqad" Relationship="Self.FK__RefereeSq__Appoi__59FA5E80" FromRole="Appointment" ToRole="RefereeSqad" />
-          <NavigationProperty Name="Squad" Relationship="Self.FK__Squad__Appointme__5CD6CB2B" FromRole="Appointment" ToRole="Squad" />
+          <NavigationProperty Name="Location" Relationship="Model.FK__Appointme__Locat__5441852A" FromRole="Appointment" ToRole="Location" />
+          <NavigationProperty Name="Team" Relationship="Model.FK__Appointme__TeamI__5165187F" FromRole="Appointment" ToRole="Team" />
+          <NavigationProperty Name="Team1" Relationship="Model.FK__Appointme__TeamI__52593CB8" FromRole="Appointment" ToRole="Team" />
+          <NavigationProperty Name="Tournament" Relationship="Model.FK__Appointme__Tourn__534D60F1" FromRole="Appointment" ToRole="Tournament" />
+          <NavigationProperty Name="Game_time" Relationship="Model.FK__Game_time__Appoi__571DF1D5" FromRole="Appointment" ToRole="Game_time" />
+          <NavigationProperty Name="RefereeSqad" Relationship="Model.FK__RefereeSq__Appoi__59FA5E80" FromRole="Appointment" ToRole="RefereeSqad" />
+          <NavigationProperty Name="Squad" Relationship="Model.FK__Squad__Appointme__5CD6CB2B" FromRole="Appointment" ToRole="Squad" />
         </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Model.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUserClaims">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUserLogins">
           <Key>
@@ -644,16 +757,16 @@
             <PropertyRef Name="ProviderKey" />
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUsers">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
           <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -664,22 +777,32 @@
           <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
-          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
-          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="AspNetRoles" Relationship="Model.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Coach">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TeamId" Type="Int32" Nullable="false" />
-          <Property Name="WorkingFrom" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="WorkingTo" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Team" Relationship="Self.FK__Coach__TeamId__5535A963" FromRole="Coach" ToRole="Team" />
+          <Property Name="WorkingFrom" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="WorkingTo" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Team" Relationship="Model.FK__Coach__TeamId__5535A963" FromRole="Coach" ToRole="Team" />
         </EntityType>
         <EntityType Name="Game_time">
           <Key>
@@ -690,63 +813,64 @@
           <Property Name="AppointmentId" Type="Int32" Nullable="false" />
           <Property Name="TimeFrom" Type="Time" Precision="7" />
           <Property Name="TimeTo" Type="Time" Precision="7" />
-          <NavigationProperty Name="Appointment" Relationship="Self.FK__Game_time__Appoi__571DF1D5" FromRole="Game_time" ToRole="Appointment" />
-          <NavigationProperty Name="Player" Relationship="Self.FK__Game_time__Playe__5629CD9C" FromRole="Game_time" ToRole="Player" />
+          <NavigationProperty Name="Appointment" Relationship="Model.FK__Game_time__Appoi__571DF1D5" FromRole="Game_time" ToRole="Appointment" />
+          <NavigationProperty Name="Player" Relationship="Model.FK__Game_time__Playe__5629CD9C" FromRole="Game_time" ToRole="Player" />
         </EntityType>
         <EntityType Name="Ligue">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Tournament" Relationship="Self.FK__Tournamen__Ligue__619B8048" FromRole="Ligue" ToRole="Tournament" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Tournament" Relationship="Model.FK__Tournamen__Ligue__619B8048" FromRole="Ligue" ToRole="Tournament" />
+          <NavigationProperty Name="Team" Relationship="Model.FK__Team__LigueId__60A75C0F" FromRole="Ligue" ToRole="Team" />
         </EntityType>
         <EntityType Name="Location">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Appointment" Relationship="Self.FK__Appointme__Locat__5441852A" FromRole="Location" ToRole="Appointment" />
-          <NavigationProperty Name="Team" Relationship="Self.FK__Team__LocationId__60A75C0F" FromRole="Location" ToRole="Team" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Seats" Type="Int32" />
           <Property Name="Picture" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Appointment" Relationship="Model.FK__Appointme__Locat__5441852A" FromRole="Location" ToRole="Appointment" />
+          <NavigationProperty Name="Team" Relationship="Model.FK__Team__LocationId__60A75C0F" FromRole="Location" ToRole="Team" />
         </EntityType>
         <EntityType Name="Player">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TeamId" Type="Int32" Nullable="false" />
           <Property Name="PositionId" Type="Int32" Nullable="false" />
-          <Property Name="PlayingFrom" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="PlayingTo" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Game_time" Relationship="Self.FK__Game_time__Playe__5629CD9C" FromRole="Player" ToRole="Game_time" />
-          <NavigationProperty Name="Position" Relationship="Self.FK__Player__Position__59063A47" FromRole="Player" ToRole="Position" />
-          <NavigationProperty Name="Team" Relationship="Self.FK__Player__TeamId__5812160E" FromRole="Player" ToRole="Team" />
-          <NavigationProperty Name="Statistic_detail" Relationship="Self.FK__Statistic__Playe__5EBF139D" FromRole="Player" ToRole="Statistic_detail" />
+          <Property Name="PlayingFrom" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PlayingTo" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Game_time" Relationship="Model.FK__Game_time__Playe__5629CD9C" FromRole="Player" ToRole="Game_time" />
+          <NavigationProperty Name="Position" Relationship="Model.FK__Player__Position__59063A47" FromRole="Player" ToRole="Position" />
+          <NavigationProperty Name="Team" Relationship="Model.FK__Player__TeamId__5812160E" FromRole="Player" ToRole="Team" />
+          <NavigationProperty Name="Statistic_detail" Relationship="Model.FK__Statistic__Playe__5EBF139D" FromRole="Player" ToRole="Statistic_detail" />
         </EntityType>
         <EntityType Name="Position">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Player" Relationship="Self.FK__Player__Position__59063A47" FromRole="Position" ToRole="Player" />
-          <NavigationProperty Name="Squad" Relationship="Self.FK__Squad__PositionI__5DCAEF64" FromRole="Position" ToRole="Squad" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Player" Relationship="Model.FK__Player__Position__59063A47" FromRole="Position" ToRole="Player" />
+          <NavigationProperty Name="Squad" Relationship="Model.FK__Squad__PositionI__5DCAEF64" FromRole="Position" ToRole="Squad" />
         </EntityType>
         <EntityType Name="Referee">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="RefereeSqad" Relationship="Self.FK__RefereeSq__Refer__5AEE82B9" FromRole="Referee" ToRole="RefereeSqad" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="RefereeSqad" Relationship="Model.FK__RefereeSq__Refer__5AEE82B9" FromRole="Referee" ToRole="RefereeSqad" />
         </EntityType>
         <EntityType Name="RefereeSqad">
           <Key>
@@ -756,17 +880,17 @@
           <Property Name="AppointmentId" Type="Int32" Nullable="false" />
           <Property Name="RefereeId" Type="Int32" Nullable="false" />
           <Property Name="RefereeTypeId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Appointment" Relationship="Self.FK__RefereeSq__Appoi__59FA5E80" FromRole="RefereeSqad" ToRole="Appointment" />
-          <NavigationProperty Name="Referee" Relationship="Self.FK__RefereeSq__Refer__5AEE82B9" FromRole="RefereeSqad" ToRole="Referee" />
-          <NavigationProperty Name="RefereeType" Relationship="Self.FK__RefereeSq__Refer__5BE2A6F2" FromRole="RefereeSqad" ToRole="RefereeType" />
+          <NavigationProperty Name="Appointment" Relationship="Model.FK__RefereeSq__Appoi__59FA5E80" FromRole="RefereeSqad" ToRole="Appointment" />
+          <NavigationProperty Name="Referee" Relationship="Model.FK__RefereeSq__Refer__5AEE82B9" FromRole="RefereeSqad" ToRole="Referee" />
+          <NavigationProperty Name="RefereeType" Relationship="Model.FK__RefereeSq__Refer__5BE2A6F2" FromRole="RefereeSqad" ToRole="RefereeType" />
         </EntityType>
         <EntityType Name="RefereeType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="RefereeSqad" Relationship="Self.FK__RefereeSq__Refer__5BE2A6F2" FromRole="RefereeType" ToRole="RefereeSqad" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="RefereeSqad" Relationship="Model.FK__RefereeSq__Refer__5BE2A6F2" FromRole="RefereeType" ToRole="RefereeSqad" />
         </EntityType>
         <EntityType Name="Squad">
           <Key>
@@ -776,16 +900,16 @@
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="AppointmentId" Type="Int32" Nullable="false" />
           <Property Name="PositionId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Appointment" Relationship="Self.FK__Squad__Appointme__5CD6CB2B" FromRole="Squad" ToRole="Appointment" />
-          <NavigationProperty Name="Position" Relationship="Self.FK__Squad__PositionI__5DCAEF64" FromRole="Squad" ToRole="Position" />
+          <NavigationProperty Name="Appointment" Relationship="Model.FK__Squad__Appointme__5CD6CB2B" FromRole="Squad" ToRole="Appointment" />
+          <NavigationProperty Name="Position" Relationship="Model.FK__Squad__PositionI__5DCAEF64" FromRole="Squad" ToRole="Position" />
         </EntityType>
         <EntityType Name="Statistic">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Statistic_detail" Relationship="Self.FK__Statistic__Stati__5FB337D6" FromRole="Statistic" ToRole="Statistic_detail" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Statistic_detail" Relationship="Model.FK__Statistic__Stati__5FB337D6" FromRole="Statistic" ToRole="Statistic_detail" />
         </EntityType>
         <EntityType Name="Statistic_detail">
           <Key>
@@ -795,22 +919,24 @@
           <Property Name="StatisticId" Type="Int32" Nullable="false" />
           <Property Name="Time" Type="Time" Precision="7" />
           <Property Name="PlayerId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Player" Relationship="Self.FK__Statistic__Playe__5EBF139D" FromRole="Statistic_detail" ToRole="Player" />
-          <NavigationProperty Name="Statistic" Relationship="Self.FK__Statistic__Stati__5FB337D6" FromRole="Statistic_detail" ToRole="Statistic" />
+          <NavigationProperty Name="Player" Relationship="Model.FK__Statistic__Playe__5EBF139D" FromRole="Statistic_detail" ToRole="Player" />
+          <NavigationProperty Name="Statistic" Relationship="Model.FK__Statistic__Stati__5FB337D6" FromRole="Statistic_detail" ToRole="Statistic" />
         </EntityType>
         <EntityType Name="Team">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="LocationId" Type="Int32" Nullable="false" />
-          <Property Name="Logo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Appointment" Relationship="Self.FK__Appointme__TeamI__5165187F" FromRole="Team" ToRole="Appointment" />
-          <NavigationProperty Name="Appointment1" Relationship="Self.FK__Appointme__TeamI__52593CB8" FromRole="Team" ToRole="Appointment" />
-          <NavigationProperty Name="Coach" Relationship="Self.FK__Coach__TeamId__5535A963" FromRole="Team" ToRole="Coach" />
-          <NavigationProperty Name="Location" Relationship="Self.FK__Team__LocationId__60A75C0F" FromRole="Team" ToRole="Location" />
-          <NavigationProperty Name="Player" Relationship="Self.FK__Player__TeamId__5812160E" FromRole="Team" ToRole="Player" />
+          <Property Name="Logo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Appointment" Relationship="Model.FK__Appointme__TeamI__5165187F" FromRole="Team" ToRole="Appointment" />
+          <NavigationProperty Name="Appointment1" Relationship="Model.FK__Appointme__TeamI__52593CB8" FromRole="Team" ToRole="Appointment" />
+          <NavigationProperty Name="Coach" Relationship="Model.FK__Coach__TeamId__5535A963" FromRole="Team" ToRole="Coach" />
+          <NavigationProperty Name="Location" Relationship="Model.FK__Team__LocationId__60A75C0F" FromRole="Team" ToRole="Location" />
+          <NavigationProperty Name="Player" Relationship="Model.FK__Player__TeamId__5812160E" FromRole="Team" ToRole="Player" />
+          <Property Name="LigueId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Ligue" Relationship="Model.FK__Team__LigueId__60A75C0F" FromRole="Team" ToRole="Ligue" />
         </EntityType>
         <EntityType Name="Tournament">
           <Key>
@@ -818,15 +944,15 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LigueId" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="TimeFrom" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="TimeTo" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Appointment" Relationship="Self.FK__Appointme__Tourn__534D60F1" FromRole="Tournament" ToRole="Appointment" />
-          <NavigationProperty Name="Ligue" Relationship="Self.FK__Tournamen__Ligue__619B8048" FromRole="Tournament" ToRole="Ligue" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TimeFrom" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TimeTo" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Appointment" Relationship="Model.FK__Appointme__Tourn__534D60F1" FromRole="Tournament" ToRole="Appointment" />
+          <NavigationProperty Name="Ligue" Relationship="Model.FK__Tournamen__Ligue__619B8048" FromRole="Tournament" ToRole="Ligue" />
         </EntityType>
         <Association Name="FK__Appointme__Locat__5441852A">
-          <End Role="Location" Type="Self.Location" Multiplicity="1" />
-          <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
+          <End Type="Model.Location" Role="Location" Multiplicity="1" />
+          <End Type="Model.Appointment" Role="Appointment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Location">
               <PropertyRef Name="Id" />
@@ -837,8 +963,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Appointme__TeamI__5165187F">
-          <End Role="Team" Type="Self.Team" Multiplicity="1" />
-          <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
+          <End Type="Model.Team" Role="Team" Multiplicity="1" />
+          <End Type="Model.Appointment" Role="Appointment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Team">
               <PropertyRef Name="Id" />
@@ -849,8 +975,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Appointme__TeamI__52593CB8">
-          <End Role="Team" Type="Self.Team" Multiplicity="1" />
-          <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
+          <End Type="Model.Team" Role="Team" Multiplicity="1" />
+          <End Type="Model.Appointment" Role="Appointment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Team">
               <PropertyRef Name="Id" />
@@ -861,8 +987,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Appointme__Tourn__534D60F1">
-          <End Role="Tournament" Type="Self.Tournament" Multiplicity="1" />
-          <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
+          <End Type="Model.Tournament" Role="Tournament" Multiplicity="1" />
+          <End Type="Model.Appointment" Role="Appointment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tournament">
               <PropertyRef Name="Id" />
@@ -873,8 +999,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Game_time__Appoi__571DF1D5">
-          <End Role="Appointment" Type="Self.Appointment" Multiplicity="1" />
-          <End Role="Game_time" Type="Self.Game_time" Multiplicity="*" />
+          <End Type="Model.Appointment" Role="Appointment" Multiplicity="1" />
+          <End Type="Model.Game_time" Role="Game_time" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Appointment">
               <PropertyRef Name="Id" />
@@ -885,8 +1011,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__RefereeSq__Appoi__59FA5E80">
-          <End Role="Appointment" Type="Self.Appointment" Multiplicity="1" />
-          <End Role="RefereeSqad" Type="Self.RefereeSqad" Multiplicity="*" />
+          <End Type="Model.Appointment" Role="Appointment" Multiplicity="1" />
+          <End Type="Model.RefereeSqad" Role="RefereeSqad" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Appointment">
               <PropertyRef Name="Id" />
@@ -897,8 +1023,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Squad__Appointme__5CD6CB2B">
-          <End Role="Appointment" Type="Self.Appointment" Multiplicity="1" />
-          <End Role="Squad" Type="Self.Squad" Multiplicity="*" />
+          <End Type="Model.Appointment" Role="Appointment" Multiplicity="1" />
+          <End Type="Model.Squad" Role="Squad" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Appointment">
               <PropertyRef Name="Id" />
@@ -909,10 +1035,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+          <End Type="Model.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <End Type="Model.AspNetUserClaims" Role="AspNetUserClaims" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -923,10 +1049,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+          <End Type="Model.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <End Type="Model.AspNetUserLogins" Role="AspNetUserLogins" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -937,8 +1063,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Coach__TeamId__5535A963">
-          <End Role="Team" Type="Self.Team" Multiplicity="1" />
-          <End Role="Coach" Type="Self.Coach" Multiplicity="*" />
+          <End Type="Model.Team" Role="Team" Multiplicity="1" />
+          <End Type="Model.Coach" Role="Coach" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Team">
               <PropertyRef Name="Id" />
@@ -949,8 +1075,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Game_time__Playe__5629CD9C">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Game_time" Type="Self.Game_time" Multiplicity="*" />
+          <End Type="Model.Player" Role="Player" Multiplicity="1" />
+          <End Type="Model.Game_time" Role="Game_time" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Player">
               <PropertyRef Name="Id" />
@@ -961,8 +1087,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Tournamen__Ligue__619B8048">
-          <End Role="Ligue" Type="Self.Ligue" Multiplicity="1" />
-          <End Role="Tournament" Type="Self.Tournament" Multiplicity="*" />
+          <End Type="Model.Ligue" Role="Ligue" Multiplicity="1" />
+          <End Type="Model.Tournament" Role="Tournament" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ligue">
               <PropertyRef Name="Id" />
@@ -973,8 +1099,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Team__LocationId__60A75C0F">
-          <End Role="Location" Type="Self.Location" Multiplicity="1" />
-          <End Role="Team" Type="Self.Team" Multiplicity="*" />
+          <End Type="Model.Location" Role="Location" Multiplicity="1" />
+          <End Type="Model.Team" Role="Team" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Location">
               <PropertyRef Name="Id" />
@@ -985,8 +1111,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Player__Position__59063A47">
-          <End Role="Position" Type="Self.Position" Multiplicity="1" />
-          <End Role="Player" Type="Self.Player" Multiplicity="*" />
+          <End Type="Model.Position" Role="Position" Multiplicity="1" />
+          <End Type="Model.Player" Role="Player" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Position">
               <PropertyRef Name="Id" />
@@ -997,8 +1123,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Player__TeamId__5812160E">
-          <End Role="Team" Type="Self.Team" Multiplicity="1" />
-          <End Role="Player" Type="Self.Player" Multiplicity="*" />
+          <End Type="Model.Team" Role="Team" Multiplicity="1" />
+          <End Type="Model.Player" Role="Player" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Team">
               <PropertyRef Name="Id" />
@@ -1009,8 +1135,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Statistic__Playe__5EBF139D">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Statistic_detail" Type="Self.Statistic_detail" Multiplicity="*" />
+          <End Type="Model.Player" Role="Player" Multiplicity="1" />
+          <End Type="Model.Statistic_detail" Role="Statistic_detail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Player">
               <PropertyRef Name="Id" />
@@ -1021,8 +1147,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Squad__PositionI__5DCAEF64">
-          <End Role="Position" Type="Self.Position" Multiplicity="1" />
-          <End Role="Squad" Type="Self.Squad" Multiplicity="*" />
+          <End Type="Model.Position" Role="Position" Multiplicity="1" />
+          <End Type="Model.Squad" Role="Squad" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Position">
               <PropertyRef Name="Id" />
@@ -1033,8 +1159,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__RefereeSq__Refer__5AEE82B9">
-          <End Role="Referee" Type="Self.Referee" Multiplicity="1" />
-          <End Role="RefereeSqad" Type="Self.RefereeSqad" Multiplicity="*" />
+          <End Type="Model.Referee" Role="Referee" Multiplicity="1" />
+          <End Type="Model.RefereeSqad" Role="RefereeSqad" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Referee">
               <PropertyRef Name="Id" />
@@ -1045,8 +1171,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__RefereeSq__Refer__5BE2A6F2">
-          <End Role="RefereeType" Type="Self.RefereeType" Multiplicity="1" />
-          <End Role="RefereeSqad" Type="Self.RefereeSqad" Multiplicity="*" />
+          <End Type="Model.RefereeType" Role="RefereeType" Multiplicity="1" />
+          <End Type="Model.RefereeSqad" Role="RefereeSqad" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="RefereeType">
               <PropertyRef Name="Id" />
@@ -1057,8 +1183,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Statistic__Stati__5FB337D6">
-          <End Role="Statistic" Type="Self.Statistic" Multiplicity="1" />
-          <End Role="Statistic_detail" Type="Self.Statistic_detail" Multiplicity="*" />
+          <End Type="Model.Statistic" Role="Statistic" Multiplicity="1" />
+          <End Type="Model.Statistic_detail" Role="Statistic_detail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Statistic">
               <PropertyRef Name="Id" />
@@ -1069,216 +1195,122 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="AspNetUserRoles">
-          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="*" />
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+          <End Type="Model.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
+          <End Type="Model.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
-          <EntitySet Name="Appointment" EntityType="Self.Appointment" />
-          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
-          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
-          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
-          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
-          <EntitySet Name="Coach" EntityType="Self.Coach" />
-          <EntitySet Name="Game_time" EntityType="Self.Game_time" />
-          <EntitySet Name="Ligue" EntityType="Self.Ligue" />
-          <EntitySet Name="Location" EntityType="Self.Location" />
-          <EntitySet Name="Player" EntityType="Self.Player" />
-          <EntitySet Name="Position" EntityType="Self.Position" />
-          <EntitySet Name="Referee" EntityType="Self.Referee" />
-          <EntitySet Name="RefereeSqad" EntityType="Self.RefereeSqad" />
-          <EntitySet Name="RefereeType" EntityType="Self.RefereeType" />
-          <EntitySet Name="Squad" EntityType="Self.Squad" />
-          <EntitySet Name="Statistic" EntityType="Self.Statistic" />
-          <EntitySet Name="Statistic_detail" EntityType="Self.Statistic_detail" />
-          <EntitySet Name="Team" EntityType="Self.Team" />
-          <EntitySet Name="Tournament" EntityType="Self.Tournament" />
-          <AssociationSet Name="FK__Appointme__Locat__5441852A" Association="Self.FK__Appointme__Locat__5441852A">
-            <End Role="Location" EntitySet="Location" />
-            <End Role="Appointment" EntitySet="Appointment" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Appointme__TeamI__5165187F" Association="Self.FK__Appointme__TeamI__5165187F">
-            <End Role="Team" EntitySet="Team" />
-            <End Role="Appointment" EntitySet="Appointment" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Appointme__TeamI__52593CB8" Association="Self.FK__Appointme__TeamI__52593CB8">
-            <End Role="Team" EntitySet="Team" />
-            <End Role="Appointment" EntitySet="Appointment" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Appointme__Tourn__534D60F1" Association="Self.FK__Appointme__Tourn__534D60F1">
-            <End Role="Tournament" EntitySet="Tournament" />
-            <End Role="Appointment" EntitySet="Appointment" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Game_time__Appoi__571DF1D5" Association="Self.FK__Game_time__Appoi__571DF1D5">
-            <End Role="Appointment" EntitySet="Appointment" />
-            <End Role="Game_time" EntitySet="Game_time" />
-          </AssociationSet>
-          <AssociationSet Name="FK__RefereeSq__Appoi__59FA5E80" Association="Self.FK__RefereeSq__Appoi__59FA5E80">
-            <End Role="Appointment" EntitySet="Appointment" />
-            <End Role="RefereeSqad" EntitySet="RefereeSqad" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Squad__Appointme__5CD6CB2B" Association="Self.FK__Squad__Appointme__5CD6CB2B">
-            <End Role="Appointment" EntitySet="Appointment" />
-            <End Role="Squad" EntitySet="Squad" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Coach__TeamId__5535A963" Association="Self.FK__Coach__TeamId__5535A963">
-            <End Role="Team" EntitySet="Team" />
-            <End Role="Coach" EntitySet="Coach" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Game_time__Playe__5629CD9C" Association="Self.FK__Game_time__Playe__5629CD9C">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Game_time" EntitySet="Game_time" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Tournamen__Ligue__619B8048" Association="Self.FK__Tournamen__Ligue__619B8048">
-            <End Role="Ligue" EntitySet="Ligue" />
-            <End Role="Tournament" EntitySet="Tournament" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Team__LocationId__60A75C0F" Association="Self.FK__Team__LocationId__60A75C0F">
-            <End Role="Location" EntitySet="Location" />
-            <End Role="Team" EntitySet="Team" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Player__Position__59063A47" Association="Self.FK__Player__Position__59063A47">
-            <End Role="Position" EntitySet="Position" />
-            <End Role="Player" EntitySet="Player" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Player__TeamId__5812160E" Association="Self.FK__Player__TeamId__5812160E">
-            <End Role="Team" EntitySet="Team" />
-            <End Role="Player" EntitySet="Player" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Statistic__Playe__5EBF139D" Association="Self.FK__Statistic__Playe__5EBF139D">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Statistic_detail" EntitySet="Statistic_detail" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Squad__PositionI__5DCAEF64" Association="Self.FK__Squad__PositionI__5DCAEF64">
-            <End Role="Position" EntitySet="Position" />
-            <End Role="Squad" EntitySet="Squad" />
-          </AssociationSet>
-          <AssociationSet Name="FK__RefereeSq__Refer__5AEE82B9" Association="Self.FK__RefereeSq__Refer__5AEE82B9">
-            <End Role="Referee" EntitySet="Referee" />
-            <End Role="RefereeSqad" EntitySet="RefereeSqad" />
-          </AssociationSet>
-          <AssociationSet Name="FK__RefereeSq__Refer__5BE2A6F2" Association="Self.FK__RefereeSq__Refer__5BE2A6F2">
-            <End Role="RefereeType" EntitySet="RefereeType" />
-            <End Role="RefereeSqad" EntitySet="RefereeSqad" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Statistic__Stati__5FB337D6" Association="Self.FK__Statistic__Stati__5FB337D6">
-            <End Role="Statistic" EntitySet="Statistic" />
-            <End Role="Statistic_detail" EntitySet="Statistic_detail" />
-          </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-          </AssociationSet>
-        </EntityContainer>
+        <Association Name="FK__Team__LigueId__60A75C0F">
+          <End Type="Model.Ligue" Role="Ligue" Multiplicity="1" />
+          <End Type="Model.Team" Role="Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ligue">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Team">
+              <PropertyRef Name="LigueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
-          <EntitySetMapping Name="C__MigrationHistory">
-            <EntityTypeMapping TypeName="Model.C__MigrationHistory">
-              <MappingFragment StoreEntitySet="__MigrationHistory">
-                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
-                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
-                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Appointment">
             <EntityTypeMapping TypeName="Model.Appointment">
               <MappingFragment StoreEntitySet="Appointment">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="TeamId1" ColumnName="TeamId1" />
-                <ScalarProperty Name="TeamId2" ColumnName="TeamId2" />
-                <ScalarProperty Name="TournamentId" ColumnName="TournamentId" />
-                <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
-                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
                 <ScalarProperty Name="Attendance" ColumnName="Attendance" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+                <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
+                <ScalarProperty Name="TournamentId" ColumnName="TournamentId" />
+                <ScalarProperty Name="TeamId2" ColumnName="TeamId2" />
+                <ScalarProperty Name="TeamId1" ColumnName="TeamId1" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetRoles">
             <EntityTypeMapping TypeName="Model.AspNetRoles">
               <MappingFragment StoreEntitySet="AspNetRoles">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
             <EntityTypeMapping TypeName="Model.AspNetUserClaims">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
                 <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
             <EntityTypeMapping TypeName="Model.AspNetUserLogins">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
-                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
-                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="Model.AspNetUsers">
               <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="Model.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="C__MigrationHistory">
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Coach">
             <EntityTypeMapping TypeName="Model.Coach">
               <MappingFragment StoreEntitySet="Coach">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
-                <ScalarProperty Name="WorkingFrom" ColumnName="WorkingFrom" />
                 <ScalarProperty Name="WorkingTo" ColumnName="WorkingTo" />
+                <ScalarProperty Name="WorkingFrom" ColumnName="WorkingFrom" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Game_time">
             <EntityTypeMapping TypeName="Model.Game_time">
               <MappingFragment StoreEntitySet="Game_time">
-                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
-                <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
-                <ScalarProperty Name="TimeFrom" ColumnName="TimeFrom" />
                 <ScalarProperty Name="TimeTo" ColumnName="TimeTo" />
+                <ScalarProperty Name="TimeFrom" ColumnName="TimeFrom" />
+                <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
+                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Ligue">
             <EntityTypeMapping TypeName="Model.Ligue">
               <MappingFragment StoreEntitySet="Ligue">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1287,114 +1319,115 @@
               <MappingFragment StoreEntitySet="Location">
                 <ScalarProperty Name="Picture" ColumnName="Picture" />
                 <ScalarProperty Name="Seats" ColumnName="Seats" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Player">
             <EntityTypeMapping TypeName="Model.Player">
               <MappingFragment StoreEntitySet="Player">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
-                <ScalarProperty Name="PositionId" ColumnName="PositionId" />
-                <ScalarProperty Name="PlayingFrom" ColumnName="PlayingFrom" />
                 <ScalarProperty Name="PlayingTo" ColumnName="PlayingTo" />
+                <ScalarProperty Name="PlayingFrom" ColumnName="PlayingFrom" />
+                <ScalarProperty Name="PositionId" ColumnName="PositionId" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Position">
             <EntityTypeMapping TypeName="Model.Position">
               <MappingFragment StoreEntitySet="Position">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Referee">
             <EntityTypeMapping TypeName="Model.Referee">
               <MappingFragment StoreEntitySet="Referee">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RefereeSqad">
             <EntityTypeMapping TypeName="Model.RefereeSqad">
               <MappingFragment StoreEntitySet="RefereeSqad">
-                <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
-                <ScalarProperty Name="RefereeId" ColumnName="RefereeId" />
                 <ScalarProperty Name="RefereeTypeId" ColumnName="RefereeTypeId" />
+                <ScalarProperty Name="RefereeId" ColumnName="RefereeId" />
+                <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RefereeType">
             <EntityTypeMapping TypeName="Model.RefereeType">
               <MappingFragment StoreEntitySet="RefereeType">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Squad">
             <EntityTypeMapping TypeName="Model.Squad">
               <MappingFragment StoreEntitySet="Squad">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
                 <ScalarProperty Name="PositionId" ColumnName="PositionId" />
+                <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Statistic">
             <EntityTypeMapping TypeName="Model.Statistic">
               <MappingFragment StoreEntitySet="Statistic">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Statistic_detail">
             <EntityTypeMapping TypeName="Model.Statistic_detail">
               <MappingFragment StoreEntitySet="Statistic_detail">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="StatisticId" ColumnName="StatisticId" />
-                <ScalarProperty Name="Time" ColumnName="Time" />
                 <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="StatisticId" ColumnName="StatisticId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Team">
             <EntityTypeMapping TypeName="Model.Team">
               <MappingFragment StoreEntitySet="Team">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+                <ScalarProperty Name="LigueId" ColumnName="LigueId" />
                 <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tournament">
             <EntityTypeMapping TypeName="Model.Tournament">
               <MappingFragment StoreEntitySet="Tournament">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="LigueId" ColumnName="LigueId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="TimeFrom" ColumnName="TimeFrom" />
                 <ScalarProperty Name="TimeTo" ColumnName="TimeTo" />
+                <ScalarProperty Name="TimeFrom" ColumnName="TimeFrom" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LigueId" ColumnName="LigueId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <AssociationSetMapping Name="AspNetUserRoles" TypeName="Model.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetRoles">
-              <ScalarProperty Name="Id" ColumnName="RoleId" />
-            </EndProperty>
             <EndProperty Name="AspNetUsers">
               <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

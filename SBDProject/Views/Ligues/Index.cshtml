@@ -1,37 +1,38 @@
 ﻿@model IEnumerable<SBDProject.Models.Ligue>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Lista lig";
 }
 <h1 class="alert-info col-md-12 text-center header">LIGI</h1>
 @if (User.IsInRole("admin"))
 {
-    @Html.ActionLink("Create","Create","Ligues",null,new { @class = "btn btn-primary"})
+    @Html.ActionLink("Dodaj ligę", "Create", "Ligues", null, new { @class = "btn btn-primary", @style="margin-bottom:20px;"})
 }
 
 <br />
 <table class="table table-bordered table-responsive">
     <tr>
-        <th class="col-md-10">
-            @Html.DisplayNameFor(model => model.Name)
+        <th class="col-md-9">
+            Nazwa ligi
         </th>
-        <th class="col-lg-2"></th>
+        <th class="col-lg-3"></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>         
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) 
-            @if (User.IsInRole("admin"))
-            {
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) 
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            }
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Szczegóły", "Details", new { id = item.Id }, new { @class = "btn btn-primary" })
+                @if (User.IsInRole("admin"))
+                {
+                    @Html.ActionLink("Edytuj", "Edit", new { id = item.Id }, new { @class = "btn btn-primary", @style = "margin-right:5px;" })
+                    @Html.ActionLink("Usuń", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                }
+            </td>
+        </tr>
+    }
 
 </table>

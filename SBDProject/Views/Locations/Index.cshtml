@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<SBDProject.Models.Location>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Lista lokalizacji";
 }
 <h1 class="alert-info col-md-12 text-center header">STADIONY</h1>
 
@@ -29,8 +29,12 @@
                 </div>
             </div>
             <br />
-            @Html.ActionLink("Edytuj", "Edit", "Locations", new { id = stadium.Id}, new { @class = "btn btn-primary" })
+            @if (User.IsInRole("admin"))
+            {
+                @Html.ActionLink("Edytuj", "Edit", "Locations", new { id = stadium.Id }, new { @class = "btn btn-primary", @style="margin-right:20px" })
+                @Html.ActionLink("Usuń", "Delete", "Locations", new { id = stadium.Id }, new { @class = "btn btn-danger" })
+            }
         </div>
-        
+
     }
 </div>

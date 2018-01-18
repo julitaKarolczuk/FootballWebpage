@@ -1,17 +1,16 @@
 ﻿@model SBDProject.Models.Location
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Szczegóły lokalizacji";
 }
 
-<h2>Details</h2>
+<h2>Szczegóły lokalizacji</h2>
 
 <div>
-    <h4>Location</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+           Nazwa lokalizacji
         </dt>
 
         <dd>
@@ -19,7 +18,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Address)
+            Adres
         </dt>
 
         <dd>
@@ -29,6 +28,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edytuj", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Powrót do listy lokalizacji", "Index", null, new { @class = "btn btn-primary" })
 </p>
