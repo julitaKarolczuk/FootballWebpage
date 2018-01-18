@@ -17,7 +17,7 @@ namespace SBDProject.Controllers
         // GET: Appointments
         public ActionResult Index()
         {
-            var appointment = db.Appointment.Include(a => a.Location).Include(a => a.Team).Include(a => a.Team1);
+            var appointment = db.Appointment.Include(a => a.Location).Include(a => a.Team).Include(a => a.Team1).Include(a=>a.RefereeSqad);
             return View(appointment.ToList());
         }
 
@@ -42,6 +42,7 @@ namespace SBDProject.Controllers
             ViewBag.LocationId = new SelectList(db.Location, "Id", "Name");
             ViewBag.TeamId1 = new SelectList(db.Team, "Id", "Name");
             ViewBag.TeamId2 = new SelectList(db.Team, "Id", "Name");
+            ViewBag.Referee1 = ViewBag.Referee2 = ViewBag.Referee3 = ViewBag.Referee4 = new SelectList(db.Referee.Select(r => new { r.Id, FirstNAme = r.FirstName + " " + r.LastName }), "Id", "FirstName");
             return View();
         }
 
@@ -50,19 +51,49 @@ namespace SBDProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,TeamId1,TeamId2,TournamentId,AppointmentDate,LocationId,Attendance")] Appointment appointment)
+        public ActionResult Create([Bind(Include = "Id,TeamId1,TeamId2,TournamentId,AppointmentDate,LocationId,Attendance")] Appointment appointment, int referee1, int referee2, int referee3, int referee4)
         {
             if (ModelState.IsValid)
             {
                 db.Appointment.Add(appointment);
                 db.SaveChanges();
-                return RedirectToAction("Index");
             }
 
-            ViewBag.LocationId = new SelectList(db.Location, "Id", "Name", appointment.LocationId);
-            ViewBag.TeamId1 = new SelectList(db.Team, "Id", "Name", appointment.TeamId1);
-            ViewBag.TeamId2 = new SelectList(db.Team, "Id", "Name", appointment.TeamId2);
-            return View(appointment);
+            var ref1 = new RefereeSqad
+            {
+                AppointmentId = appointment.Id,
+                RefereeId = referee1,
+                RefereeTypeId = 1
+            };
+
+            var ref2 = new RefereeSqad
+            {
+                AppointmentId = appointment.Id,
+                RefereeId = referee2,
+                RefereeTypeId = 2
+            };
+
+            var ref3 = new RefereeSqad
+            {
+                AppointmentId = appointment.Id,
+                RefereeId = referee3,
+                RefereeTypeId = 3
+            };
+
+            var ref4 = new RefereeSqad
+            {
+                AppointmentId = appointment.Id,
+                RefereeId = referee4,
+                RefereeTypeId = 4
+            };
+
+            db.RefereeSqad.Add(ref1);
+            db.RefereeSqad.Add(ref2);
+            db.RefereeSqad.Add(ref3);
+            db.RefereeSqad.Add(ref4);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         // GET: Appointments/Edit/5

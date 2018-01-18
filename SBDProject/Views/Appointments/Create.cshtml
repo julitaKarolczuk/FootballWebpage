@@ -54,6 +54,34 @@
         </div>
 
         <div class="form-group">
+            <label class="control-label col-md-2">Sędzia główny</label>
+            <div class="col-md-10">
+                @Html.DropDownList("Referee1", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Sędzia boczny pierwszy</label>
+            <div class="col-md-10">
+                @Html.DropDownList("Referee2", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Sędzia boczny drugi</label>
+            <div class="col-md-10">
+                @Html.DropDownList("Referee3", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Sędzia techniczny</label>
+            <div class="col-md-10">
+                @Html.DropDownList("Referee4", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Zapisz" class="btn btn-default" />
             </div>
