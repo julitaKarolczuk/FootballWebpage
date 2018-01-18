@@ -25,7 +25,6 @@ namespace SBDProject.Models
         public int Id { get; set; }
         public int TeamId1 { get; set; }
         public int TeamId2 { get; set; }
-        public int TournamentId { get; set; }
         public System.DateTime AppointmentDate { get; set; }
         public int LocationId { get; set; }
         public int Attendance { get; set; }
