@@ -28,6 +28,7 @@ namespace SBDProject.Models
         public int PositionId { get; set; }
         public System.DateTime PlayingFrom { get; set; }
         public System.DateTime PlayingTo { get; set; }
+        public string Picture { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Game_time> Game_time { get; set; }

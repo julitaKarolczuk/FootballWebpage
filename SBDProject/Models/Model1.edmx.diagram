@@ -24,11 +24,9 @@
         <EntityTypeShape EntityType="Model.Statistic" Width="1.5" PointX="8.25" PointY="16.625" />
         <EntityTypeShape EntityType="Model.Statistic_detail" Width="1.5" PointX="10.5" PointY="13.375" />
         <EntityTypeShape EntityType="Model.Team" Width="1.5" PointX="3" PointY="12.125" />
-        <EntityTypeShape EntityType="Model.Tournament" Width="1.5" PointX="3" PointY="4.125" />
         <AssociationConnector Association="Model.FK__Appointme__Locat__5441852A" />
         <AssociationConnector Association="Model.FK__Appointme__TeamI__5165187F" />
         <AssociationConnector Association="Model.FK__Appointme__TeamI__52593CB8" />
-        <AssociationConnector Association="Model.FK__Appointme__Tourn__534D60F1" />
         <AssociationConnector Association="Model.FK__Game_time__Appoi__571DF1D5" />
         <AssociationConnector Association="Model.FK__RefereeSq__Appoi__59FA5E80" />
         <AssociationConnector Association="Model.FK__Squad__Appointme__5CD6CB2B" />
@@ -36,7 +34,6 @@
         <AssociationConnector Association="Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="Model.FK__Coach__TeamId__5535A963" />
         <AssociationConnector Association="Model.FK__Game_time__Playe__5629CD9C" />
-        <AssociationConnector Association="Model.FK__Tournamen__Ligue__619B8048" />
         <AssociationConnector Association="Model.FK__Team__LocationId__60A75C0F" />
         <AssociationConnector Association="Model.FK__Player__Position__59063A47" />
         <AssociationConnector Association="Model.FK__Player__TeamId__5812160E" />

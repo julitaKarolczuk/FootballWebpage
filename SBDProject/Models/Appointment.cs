@@ -33,7 +33,6 @@ namespace SBDProject.Models
         public virtual Location Location { get; set; }
         public virtual Team Team { get; set; }
         public virtual Team Team1 { get; set; }
-        public virtual Tournament Tournament { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Game_time> Game_time { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
