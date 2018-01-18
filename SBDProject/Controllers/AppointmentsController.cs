@@ -17,7 +17,7 @@ namespace SBDProject.Controllers
         // GET: Appointments
         public ActionResult Index()
         {
-            var appointment = db.Appointment.Include(a => a.Location).Include(a => a.Team).Include(a => a.Team1).Include(a => a.Tournament);
+            var appointment = db.Appointment.Include(a => a.Location).Include(a => a.Team).Include(a => a.Team1);
             return View(appointment.ToList());
         }
 
@@ -42,7 +42,6 @@ namespace SBDProject.Controllers
             ViewBag.LocationId = new SelectList(db.Location, "Id", "Name");
             ViewBag.TeamId1 = new SelectList(db.Team, "Id", "Name");
             ViewBag.TeamId2 = new SelectList(db.Team, "Id", "Name");
-            ViewBag.TournamentId = new SelectList(db.Tournament, "Id", "Name");
             return View();
         }
 
@@ -63,7 +62,6 @@ namespace SBDProject.Controllers
             ViewBag.LocationId = new SelectList(db.Location, "Id", "Name", appointment.LocationId);
             ViewBag.TeamId1 = new SelectList(db.Team, "Id", "Name", appointment.TeamId1);
             ViewBag.TeamId2 = new SelectList(db.Team, "Id", "Name", appointment.TeamId2);
-            ViewBag.TournamentId = new SelectList(db.Tournament, "Id", "Name", appointment.TournamentId);
             return View(appointment);
         }
 
@@ -82,7 +80,6 @@ namespace SBDProject.Controllers
             ViewBag.LocationId = new SelectList(db.Location, "Id", "Name", appointment.LocationId);
             ViewBag.TeamId1 = new SelectList(db.Team, "Id", "Name", appointment.TeamId1);
             ViewBag.TeamId2 = new SelectList(db.Team, "Id", "Name", appointment.TeamId2);
-            ViewBag.TournamentId = new SelectList(db.Tournament, "Id", "Name", appointment.TournamentId);
             return View(appointment);
         }
 
@@ -102,7 +99,6 @@ namespace SBDProject.Controllers
             ViewBag.LocationId = new SelectList(db.Location, "Id", "Name", appointment.LocationId);
             ViewBag.TeamId1 = new SelectList(db.Team, "Id", "Name", appointment.TeamId1);
             ViewBag.TeamId2 = new SelectList(db.Team, "Id", "Name", appointment.TeamId2);
-            ViewBag.TournamentId = new SelectList(db.Tournament, "Id", "Name", appointment.TournamentId);
             return View(appointment);
         }
 
