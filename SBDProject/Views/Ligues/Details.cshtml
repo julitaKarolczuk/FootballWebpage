@@ -19,7 +19,7 @@
             <tr>
                 <td>@team.Name</td>
                 <td>@team.Location.Name</td>
-                <td><img src="@team.Logo"</td>
+                <td><img src="@team.Logo" /></td>
                 <td>@Html.ActionLink("Szczegóły", "Details", "Teams", new { id = team.Id }, new { @class = "btn btn-primary" })</td>
             </tr>
         }

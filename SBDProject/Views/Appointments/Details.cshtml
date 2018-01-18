@@ -48,9 +48,22 @@
         <dd>
             @Html.DisplayFor(model => model.Team1.Name)
         </dd>
+
+        @if (Model.RefereeSqad.Any())
+        {
+            <dt>
+                Sędziowie
+            </dt>
+            foreach (var referee in Model.RefereeSqad)
+            {
+                <dd>
+                    @referee.RefereeType.Name - @referee.Referee.FirstName @referee.Referee.LastName
+                </dd>
+            }
+        }
     </dl>
 </div>
 <p>
     @Html.ActionLink("Edycja", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
-    @Html.ActionLink("Powró do listy meczów", "Index", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Powrót do listy meczów", "Index", null, new { @class = "btn btn-primary" })
 </p>
